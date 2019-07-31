@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -16,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-	final static String ip = "192.168.0.103";
+	final static String ip = "192.168.0.107";
 
 	public static void main(String[] args) {
 		try {
@@ -64,6 +66,7 @@ public class Main {
 						contenido += line + "\n";
 						line = bufferedReader.readLine();
 					}
+					if (contenido != "")
 					// System.out.println(contenido);
 					System.out.println("Enviando con POST");
 					hacerPOST(contenido);
@@ -72,12 +75,17 @@ public class Main {
 					bufferedReader.close();
 
 					// Eliminar el archivo
-
+					FileWriter fileWriter = new FileWriter(nombreArchivo);
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					bufferedWriter.write("");
+					bufferedWriter.close();
+					System.out.println("Reemplazado el contenido");
+					/*
 					if (archivo.delete()) {
 						System.out.println(archivo.getAbsolutePath() + " se ha eliminado");
 					} else
 						System.out.println(archivo.getAbsolutePath() + " no se ha encontrado en la carpeta");
-
+					*/
 				} catch (FileNotFoundException ex) {
 					System.out.println("Incapaz de abrir el archivo '" + nombreArchivo + "'");
 					ex.printStackTrace();
